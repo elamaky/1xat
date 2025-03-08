@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text Animation Generator</title>
   <style>
- body {
+body {
     background-color: #000;
     color: #fff;
     font-family: Arial, sans-serif;
@@ -19,14 +19,15 @@
 
 .command-table {
     background-color: #111;
-    width: 200px; /* Širina komandne table */
+    width: 100%; /* Komandna tabla zauzima celu širinu stranice */
     padding: 10px;
     color: #fff;
-    border-bottom: 1px solid #444;
+    border-top: 1px solid #444; /* Dodajemo ivicu sa vrha */
     position: fixed; /* Da ostane na ekranu čak i kad se pomeri */
-    bottom: 50px; /* Postavljeno 50px od dna ekrana */
-    right: 20px; /* Pozicionirano 20px od desne ivice ekrana */
-    z-index: 9999999999; /* Veći z-index kako bi bio iznad drugih elemenata */
+    bottom: 50; /* Postavljamo na sam dno stranice */
+    left: 0; /* Poravnanje sa levom ivicom */
+    z-index: 9999999999; /* Veći z-index da bi bila iznad svega */
+    text-align: left; /* Tekst poravnat levo unutar tabele */
 }
 
 .command-table label,
@@ -53,9 +54,8 @@
 /* Text display */
 .text-display {
     position: absolute;
-    bottom: 30px; /* Tekst će biti 30px od dna ekrana */
+    bottom: 100px; /* Tekst će biti 30px od dna ekrana */
     left: 100px; /* Tekst će biti 100px od leve ivice ekrana */
-    font-size: 50px;
     font-weight: bold;
     font-style: italic;
     color: #fff;
@@ -69,6 +69,7 @@
     border: 2px solid #fff; /* Neon bela linija oko selektovanog teksta */
     padding: 5px;
 }
+
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
