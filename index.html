@@ -16,17 +16,21 @@
         }
 
         /* Druga slika koja se ponavlja preko pozadine */
-        .overlay {
-            background-image: url('https://i.imgur.com/sneZxIS.gif');
-            background-repeat: repeat;
-            background-size: 120px 50px; /* Postavljeno na dimenzije 70x25px */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Sprečava interakciju sa slikom */
-        }
+    .overlay {
+    background-image: url('https://i.imgur.com/sneZxIS.gif');
+    background-repeat: repeat;
+    background-size: 200px 80px; /* Dimenzije slike */
+    background-position: 0 0; /* Početna pozicija */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Sprečava interakciju sa slikom */
+    background-position: 0 0, 350px 250px; /* Razmak između slika 350px horizontalno, 250px vertikalno */
+}
+
+        
     </style>
 </head>
 <body>
