@@ -1,1 +1,21 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Automatski deploy na 'main' grani
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Podižemo workflow na Ubuntu okruženje
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Kloniramo repozitorijum
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3  # Koristimo akciju za deploy na GitHub Pages
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # Koristi automatski generisani token za autentifikaciju
+        publish_dir: ./  # Koristimo root direktorijum (ako je tvoj HTML fajl u root-u)
 
