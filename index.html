@@ -6,56 +6,37 @@
     <title>Background Image Changer</title>
     <style>
         body {
-            background-color: black;
+            background-color: black; /* Podrazumevana pozadina */
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
 
-        /* Dugme za pozadinu */
-        #pozadinaBtn {
+        /* Popup stil */
+        .popup {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background-color: #000;
-            color: white;
-            border: 5px solid #fff;
-            border-radius: 0;
-            font-size: 20px;
-            text-align: center;
-            line-height: 100px;
-            z-index: 999999;
-            cursor: pointer;
-        }
-
-        #pozadinaBtn:hover {
-            background-color: #444;
-            border-color: #fff;
-        }
-
-        #inputContainer {
-            display: none; /* Početno skriveno */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            bottom: 50%;
+            right: 50%;
+            transform: translate(50%, 50%); /* Pozicionira polja tačno u centru */
             background-color: #333;
             padding: 20px;
             border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
+            width: 400px; /* Širina popup-a */
             z-index: 9999999;
+            display: flex;
+            flex-direction: row; /* Polja će biti horizontalno postavljena */
+            gap: 20px; /* Razmak između polja */
+            align-items: center; /* Vertikalno centriranje polja */
         }
 
         input[type="password"], input[type="text"] {
             padding: 10px;
-            width: 100%;
+            width: 180px; /* Širina inputa */
             margin: 10px 0;
             border: 1px solid #444;
             background-color: #222;
             color: #fff;
+            border-radius: 5px;
         }
 
         button {
@@ -70,34 +51,28 @@
         button:hover {
             background-color: #777;
         }
+
     </style>
 </head>
 <body>
-    <!-- Dugme za pozadinu -->
-    <button id="pozadinaBtn">POZADINA</button>
 
-    <!-- Unos za lozinku i URL -->
-    <div id="inputContainer">
-        <h3>Unesite lozinku</h3>
+    <!-- Popup prozor sa poljima za unos -->
+    <div class="popup" id="popup">
         <input type="password" id="passwordInput" placeholder="Unesite lozinku...">
-        <h3>Unesite URL slike za pozadinu</h3>
         <input type="text" id="imageUrlInput" placeholder="Unesite URL slike...">
         <button id="submitBtn">Spremi pozadinu</button>
     </div>
 
     <script>
-        const pozadinaBtn = document.getElementById('pozadinaBtn');
-        const inputContainer = document.getElementById('inputContainer');
+        // Referenca na elemente
+        const submitBtn = document.getElementById('submitBtn');
         const passwordInput = document.getElementById('passwordInput');
         const imageUrlInput = document.getElementById('imageUrlInput');
-        const submitBtn = document.getElementById('submitBtn');
 
+        // Lozinka koja je potrebna za unos URL-a slike
         const correctPassword = 'XMIRAX';
 
-        pozadinaBtn.addEventListener('click', () => {
-            inputContainer.style.display = 'block'; // Prikazuje unos kada se klikne dugme
-        });
-
+        // Funkcija za proveru lozinke i postavljanje pozadine
         submitBtn.addEventListener('click', () => {
             const enteredPassword = passwordInput.value;
             const imageUrl = imageUrlInput.value;
@@ -108,11 +83,11 @@
                 } else {
                     document.body.style.backgroundImage = ''; // Očisti pozadinu ako URL nije unet
                 }
-                inputContainer.style.display = 'none'; // Sakrij unos
             } else {
                 alert('Pogrešna lozinka!');
             }
         });
     </script>
+
 </body>
 </html>
