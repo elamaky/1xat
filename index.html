@@ -6,7 +6,7 @@
     <title>Background Image Changer</title>
     <style>
         body {
-            background-color: black; /* Podrazumevana pozadina */
+            background-color: black;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -15,25 +15,60 @@
         /* Dugme za pozadinu */
         #pozadinaBtn {
             position: fixed;
-            top: 0; /* Postavimo dugme na vrh ekrana */
-            left: 0; /* Postavimo ga od leve ivice */
-            width: 100%; /* Dugme zauzima celu širinu ekrana */
-            height: 150px; /* Visina dugmeta 300px */
-            background-color: #000; /* Crna pozadina */
-            color: white; /* Bele boje teksta */
-            border: 5px solid #fff; /* Bela neon ivica */
-            border-radius: 0; /* Oštri uglovi */
-            font-size: 20px; /* Veličina teksta */
-            text-align: center; /* Poravnavanje teksta u centru */
-            line-height: 300px; /* Vertikalno centriranje teksta */
-            z-index: 99999999999999; /* Visok z-index kako bi bio iznad drugih elemenata */
-            cursor: pointer; /* Prikazuje ruku kao kursor pri prelaženju preko dugmeta */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #000;
+            color: white;
+            border: 5px solid #fff;
+            border-radius: 0;
+            font-size: 20px;
+            text-align: center;
+            line-height: 100px;
+            z-index: 999999;
+            cursor: pointer;
         }
 
-        /* Hover efekat za dugme */
         #pozadinaBtn:hover {
-            background-color: #444; /* Tamnija pozadina kada se pređe mišem */
-            border-color: #fff; /* Neon bela ivica kada se pređe mišem */
+            background-color: #444;
+            border-color: #fff;
+        }
+
+        #inputContainer {
+            display: none; /* Početno skriveno */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            z-index: 9999999;
+        }
+
+        input[type="password"], input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border: 1px solid #444;
+            background-color: #222;
+            color: #fff;
+        }
+
+        button {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #777;
         }
     </style>
 </head>
@@ -41,24 +76,39 @@
     <!-- Dugme za pozadinu -->
     <button id="pozadinaBtn">POZADINA</button>
 
-    <script>
-        // Referenca na dugme
-        const pozadinaBtn = document.getElementById('pozadinaBtn');
+    <!-- Unos za lozinku i URL -->
+    <div id="inputContainer">
+        <h3>Unesite lozinku</h3>
+        <input type="password" id="passwordInput" placeholder="Unesite lozinku...">
+        <h3>Unesite URL slike za pozadinu</h3>
+        <input type="text" id="imageUrlInput" placeholder="Unesite URL slike...">
+        <button id="submitBtn">Spremi pozadinu</button>
+    </div>
 
-        // Lozinka koja je potrebna za unos URL-a slike
+    <script>
+        const pozadinaBtn = document.getElementById('pozadinaBtn');
+        const inputContainer = document.getElementById('inputContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        const imageUrlInput = document.getElementById('imageUrlInput');
+        const submitBtn = document.getElementById('submitBtn');
+
         const correctPassword = 'XMIRAX';
 
-        // Funkcija za otvaranje prompta i postavljanje pozadine
         pozadinaBtn.addEventListener('click', () => {
-            const enteredPassword = prompt('Unesite lozinku');
-            
+            inputContainer.style.display = 'block'; // Prikazuje unos kada se klikne dugme
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const enteredPassword = passwordInput.value;
+            const imageUrl = imageUrlInput.value;
+
             if (enteredPassword === correctPassword) {
-                const imageUrl = prompt('Unesite URL slike za pozadinu');
                 if (imageUrl) {
                     document.body.style.backgroundImage = `url(${imageUrl})`;
                 } else {
                     document.body.style.backgroundImage = ''; // Očisti pozadinu ako URL nije unet
                 }
+                inputContainer.style.display = 'none'; // Sakrij unos
             } else {
                 alert('Pogrešna lozinka!');
             }
