@@ -3,46 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Changer</title>
+    <title>Background Image Changer</title>
     <style>
         body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
+            background-color: black; /* Podrazumevana pozadina */
             margin: 0;
             padding: 0;
-            text-align: center;
+            font-family: Arial, sans-serif;
         }
+
+        /* Dugme za pozadinu */
         #pozadinaBtn {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 150px;
-            background-color: #444;
-            color: white;
-            border: 2px solid white;
-            cursor: pointer;
-            z-index: 9999999999;
+            top: 0; /* Postavimo dugme na vrh ekrana */
+            left: 0; /* Postavimo ga od leve ivice */
+            width: 100%; /* Dugme zauzima celu širinu ekrana */
+            height: 1500px; /* Visina dugmeta 300px */
+            background-color: #000; /* Crna pozadina */
+            color: white; /* Bele boje teksta */
+            border: 5px solid #fff; /* Bela neon ivica */
+            border-radius: 0; /* Oštri uglovi */
+            font-size: 20px; /* Veličina teksta */
+            text-align: center; /* Poravnavanje teksta u centru */
+            line-height: 300px; /* Vertikalno centriranje teksta */
+            z-index: 999999; /* Visok z-index kako bi bio iznad drugih elemenata */
+            cursor: pointer; /* Prikazuje ruku kao kursor pri prelaženju preko dugmeta */
+        }
+
+        /* Hover efekat za dugme */
+        #pozadinaBtn:hover {
+            background-color: #444; /* Tamnija pozadina kada se pređe mišem */
+            border-color: #fff; /* Neon bela ivica kada se pređe mišem */
         }
     </style>
 </head>
 <body>
-    <button id="pozadinaBtn">Promeni Pozadinu</button>
+    <!-- Dugme za pozadinu -->
+    <button id="pozadinaBtn">POZADINA</button>
 
     <script>
-        document.getElementById('pozadinaBtn').addEventListener('click', function() {
-            let password = prompt("Unesite lozinku:");
-            if (password === "XMIRAX") {
-                let imageUrl = prompt("Unesite URL slike za pozadinu (ili ostavite prazno za default):");
+        // Referenca na dugme
+        const pozadinaBtn = document.getElementById('pozadinaBtn');
+
+        // Lozinka koja je potrebna za unos URL-a slike
+        const correctPassword = 'XMIRAX';
+
+        // Funkcija za otvaranje prompta i postavljanje pozadine
+        pozadinaBtn.addEventListener('click', () => {
+            const enteredPassword = prompt('Unesite lozinku');
+            
+            if (enteredPassword === correctPassword) {
+                const imageUrl = prompt('Unesite URL slike za pozadinu');
                 if (imageUrl) {
-                    document.body.style.backgroundImage = `url('${imageUrl}')`;
-                    document.body.style.backgroundRepeat = "repeat";
-                    document.body.style.backgroundSize = "auto";
+                    document.body.style.backgroundImage = `url(${imageUrl})`;
                 } else {
-                    document.body.style.backgroundImage = "none";
+                    document.body.style.backgroundImage = ''; // Očisti pozadinu ako URL nije unet
                 }
             } else {
-                alert("Pogrešna lozinka!");
+                alert('Pogrešna lozinka!');
             }
         });
     </script>
