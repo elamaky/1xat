@@ -12,21 +12,31 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Dugme za pozadinu */
-        #pozadinaBtn {
-            position: fixed;
-            top: 200;
-            left: 100;
-            width: 50px;
-            height: 50px;
-            background-color: #444;
-            color: white;
-            border: none;
-            z-index:99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-            cursor: pointer;
-        }
+       /* Dugme za pozadinu */
+#pozadinaBtn {
+    position: fixed;
+    top: 0; /* Postavimo dugme na vrh ekrana */
+    left: 0; /* Postavimo ga od leve ivice */
+    width: 100%; /* Dugme zauzima celu širinu ekrana */
+    height: 300px; /* Visina dugmeta 300px */
+    background-color: #000; /* Crna pozadina */
+    color: white; /* Bele boje teksta */
+    border: 5px solid #fff; /* Bela neon ivica */
+    border-radius: 0; /* Oštri uglovi */
+    font-size: 20px; /* Veličina teksta */
+    text-align: center; /* Poravnavanje teksta u centru */
+    line-height: 300px; /* Vertikalno centriranje teksta */
+    z-index: 999999; /* Visok z-index kako bi bio iznad drugih elemenata */
+    cursor: pointer; /* Prikazuje ruku kao kursor pri prelaženju preko dugmeta */
+}
 
-        /* Popup stil */
+/* Hover efekat za dugme */
+#pozadinaBtn:hover {
+    background-color: #444; /* Tamnija pozadina kada se pređe mišem */
+    border-color: #fff; /* Neon bela ivica kada se pređe mišem */
+}
+
+       /* Popup stil */
         .popup {
             position: fixed;
             top: 50%;
