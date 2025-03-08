@@ -8,17 +8,18 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/e4Hy5Yr.gif'); /* Prva pozadina */
-            background-repeat: no-repeat;
-            background-size: cover; /* Pozadina se proširuje na celo ekran */
-            height: 100vh;
+            background-image: url('https://i.imgur.com/e4Hy5Yr.gif'); /* Tvoja postojeća pozadina */
+            background-repeat: repeat; /* Pozadina se ponavlja */
+            background-position: top left; /* Pozicija pozadine */
+            background-size: auto; /* Originalna veličina tvoje pozadine */
+            height: 100vh; /* Pokriva celu visinu ekrana */
         }
 
         /* Druga slika koja se ponavlja preko pozadine */
         .overlay {
             background-image: url('https://i.imgur.com/sneZxIS.gif');
             background-repeat: repeat;
-            background-size: 300px 300px; /* Svaka slika je 300px x 300px */
+            background-size: 70px 25px; /* Postavljeno na dimenzije 70x25px */
             position: absolute;
             top: 0;
             left: 0;
