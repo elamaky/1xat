@@ -3,91 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Image Changer</title>
+    <title>Background Image</title>
     <style>
         body {
-            background-color: black; /* Podrazumevana pozadina */
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            background-image: url('https://i.imgur.com/e4Hy5Yr.gif'); /* Prva pozadina */
+            background-repeat: no-repeat;
+            background-size: cover; /* Pozadina se proširuje na celo ekran */
+            height: 100vh;
         }
 
-        /* Popup stil */
-        .popup {
-            position: fixed;
-            bottom: 50px;
-            right: 50px;
-            transform: translate(50%, 50%); /* Pozicionira polja tačno u centru */
-            background-color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            width: 400px; /* Širina popup-a */
-            z-index: 9999999;
-            display: flex;
-            flex-direction: row; /* Polja će biti horizontalno postavljena */
-            gap: 20px; /* Razmak između polja */
-            align-items: center; /* Vertikalno centriranje polja */
-        }
-
-        input[type="password"], input[type="text"] {
-            padding: 10px;
-            width: 180px; /* Širina inputa */
-            margin: 10px 0;
-            border: 1px solid #444;
-            background-color: #222;
-            color: #fff;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #555;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
+        /* Druga slika koja se ponavlja preko pozadine */
+        .overlay {
+            background-image: url('https://i.imgur.com/sneZxIS.gif');
+            background-repeat: repeat;
+            background-size: 300px 300px; /* Svaka slika je 300px x 300px */
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            pointer-events: none; /* Sprečava interakciju sa slikom */
         }
-
-        button:hover {
-            background-color: #777;
-        }
-
     </style>
 </head>
 <body>
-
-    <!-- Popup prozor sa poljima za unos -->
-    <div class="popup" id="popup">
-        <input type="password" id="passwordInput" placeholder="Unesite lozinku...">
-        <input type="text" id="imageUrlInput" placeholder="Unesite URL slike...">
-        <button id="submitBtn">Spremi pozadinu</button>
-    </div>
-
-    <script>
-        // Referenca na elemente
-        const submitBtn = document.getElementById('submitBtn');
-        const passwordInput = document.getElementById('passwordInput');
-        const imageUrlInput = document.getElementById('imageUrlInput');
-
-        // Lozinka koja je potrebna za unos URL-a slike
-        const correctPassword = 'XMIRAX';
-
-        // Funkcija za proveru lozinke i postavljanje pozadine
-        submitBtn.addEventListener('click', () => {
-            const enteredPassword = passwordInput.value;
-            const imageUrl = imageUrlInput.value;
-
-            if (enteredPassword === correctPassword) {
-                if (imageUrl) {
-                    document.body.style.backgroundImage = `url(${imageUrl})`;
-                } else {
-                    document.body.style.backgroundImage = ''; // Očisti pozadinu ako URL nije unet
-                }
-            } else {
-                alert('Pogrešna lozinka!');
-            }
-        });
-    </script>
-
+    <div class="overlay"></div> <!-- Druga slika se prikazuje preko prve -->
 </body>
 </html>
