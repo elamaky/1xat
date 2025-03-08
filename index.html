@@ -5,26 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Text Animation Generator</title>
   <style>
-  body {
+ body {
     background-color: #000;
     color: #fff;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     overflow: hidden;
+    position: relative;
+    z-index: 9999999999;
     text-align: center;
 }
 
 .command-table {
     background-color: #111;
-    width: 200px; /* Postavi širinu komandne table */
+    width: 200px; /* Širina komandne table */
     padding: 10px;
     color: #fff;
     border-bottom: 1px solid #444;
     position: fixed; /* Da ostane na ekranu čak i kad se pomeri */
-    bottom: 50px;
-    right: 20px; /* Pozicioniranje na desni kraj ekrana */
-    z-index: 99999; /* Povećan z-index da bi bio iznad svega */
+    bottom: 50px; /* Postavljeno 50px od dna ekrana */
+    right: 20px; /* Pozicionirano 20px od desne ivice ekrana */
+    z-index: 9999999999; /* Veći z-index kako bi bio iznad drugih elemenata */
 }
 
 .command-table label,
@@ -60,14 +62,13 @@
     white-space: nowrap;
     cursor: grab;
     user-select: none;
-    z-index: 99999999999999999; /* Takođe visok z-index za tekst */
+    z-index: 99999999999999999; /* Najveći z-index za tekst */
 }
 
 .selected {
     border: 2px solid #fff; /* Neon bela linija oko selektovanog teksta */
     padding: 5px;
 }
-
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
