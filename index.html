@@ -1,49 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Background</title>
+    <title>Background Image</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-repeat: repeat;
-            background-size: auto;
-            height: 100vh;
+            background-image: url('https://i.imgur.com/53sDWqq.gif'); /* Početna pozadina */
+            background-repeat: repeat; /* Pozadina se ponavlja */
+            background-position: top left; /* Pozicija pozadine */
+            background-size: auto; /* Originalna veličina pozadine */
+            height: 100vh; /* Pokriva celu visinu ekrana */
         }
 
+        /* Druga slika koja se prikazuje preko pozadine */
         .overlay {
+            background-image: url(''); /* Početni overlay link */
+            background-repeat: repeat;
+            background-size: auto; /* Dimenzije slike */
+            background-position: 0 0; /* Početna pozicija */
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            background-repeat: repeat;
-            background-size: auto;
+            pointer-events: none; /* Sprečava interakciju sa slikom */
         }
-
-        .mirror {
-            position: absolute;
-            top: 0;
-            width: auto;
-            height: auto;
-            max-height: 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: auto;
-        }
-        .left { left: 0; }
-        .right { right: 0; transform: scaleX(-1); }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="mirror left"></div>
-    <div class="mirror right"></div>
+    <div class="overlay"></div> <!-- Druga slika koja se prikazuje preko prve -->
 
     <script>
+        // Listu pozadina
         const backgrounds = [
             'https://i.imgur.com/53sDWqq.gif',
             'https://i.imgur.com/e4Hy5Yr.gif',
@@ -52,7 +43,8 @@
             'https://i.imgur.com/ZBg2Oib.gif',
             'https://i.imgur.com/aNewBg2.jpg'
         ];
-        
+
+        // Listu overlay slika
         const overlays = [
             'https://i.imgur.com/Uxtb4JYl.png',
             'https://i.imgur.com/wQc59dDl.png',
@@ -70,18 +62,27 @@
             'https://i.imgur.com/XzZBSj8l.jpg'
         ];
 
-        function changeImages() {
-            const bgIndex = Math.floor(Math.random() * backgrounds.length);
-            const overlayIndex = Math.floor(Math.random() * overlays.length);
-            
-            document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
-            document.querySelector('.overlay').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
-            document.querySelector('.left').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
-            document.querySelector('.right').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
+        let currentBackgroundIndex = 0;
+        let currentOverlayIndex = 0;
+
+        // Funkcija za promenu pozadine i overlay slike
+        function changeBackgroundAndOverlay() {
+            // Postavljanje nove pozadine
+            document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
+
+            // Postavljanje nove overlay slike
+            document.querySelector('.overlay').style.backgroundImage = `url('${overlays[currentOverlayIndex]}')`;
+
+            // Prelazak na sledeću pozadinu i overlay (ako dostignemo kraj liste, vraćamo se na početak)
+            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+            currentOverlayIndex = (currentOverlayIndex + 1) % overlays.length;
         }
-        
-        changeImages();
-        setInterval(changeImages, 1800000); // Menja slike svakih 30 minuta
+
+        // Pokreni promenu na svakih 10 minuta (600000 milisekundi)
+        setInterval(changeBackgroundAndOverlay, 600000);
+
+        // Pokreni odmah promenu po učitavanju stranice
+        changeBackgroundAndOverlay();
     </script>
 </body>
 </html>
