@@ -8,33 +8,26 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/53sDWqq.gif'); /* Tvoja postojeća pozadina */
-            background-repeat: repeat; /* Pozadina se ponavlja */
-            background-position: top left; /* Pozicija pozadine */
-            background-size: auto; /* Originalna veličina tvoje pozadine */
-            height: 100vh; /* Pokriva celu visinu ekrana */
+            background-image: url('https://i.imgur.com/53sDWqq.gif');
+            background-repeat: repeat;
+            background-position: top left;
+            background-size: auto;
+            height: 100vh;
         }
 
-        /* Druga slika koja se ponavlja preko pozadine */
-        .overlay {
-            background-image: url('https://i.imgur.com/Uxtb4JYl.png'), url('https://i.imgur.com/wQc59dDl.png');
-            background-repeat: no-repeat, no-repeat;
+        #messagesContainer {
+            background-repeat: no-repeat;
             background-size: 350px 350px;
-            background-position: 50px 300px, 50px 300px; /* Pozicija slika: 50px od ivice i 300px od dna */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Sprečava interakciju sa slikama */
+            background-position: 50px 300px;
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div> <!-- Druga slika se prikazuje preko prve -->
+    <div id="messagesContainer" class="frame" style="top: 118px;">
+        <ul id="messages"></ul>
+    </div>
 
     <script>
-        // Listu pozadina
         const backgrounds = [
             'https://i.imgur.com/53sDWqq.gif',
             'https://i.imgur.com/e4Hy5Yr.gif',
@@ -45,7 +38,6 @@
             'https://i.imgur.com/aNewBg2.jpg'
         ];
 
-        // Listu overlay slika
         const overlays = [
             'https://i.imgur.com/Uxtb4JYl.png',
             'https://i.imgur.com/wQc59dDl.png',
@@ -66,23 +58,15 @@
         let currentBackgroundIndex = 0;
         let currentOverlayIndex = 0;
 
-        // Funkcija za promenu pozadine i overlay slike
         function changeBackgroundAndOverlay() {
-            // Postavljanje nove pozadine
             document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
+            document.getElementById('messagesContainer').style.backgroundImage = `url('${overlays[currentOverlayIndex]}')`;
 
-            // Postavljanje nove overlay slike
-            document.querySelector('.overlay').style.backgroundImage = `url('${overlays[currentOverlayIndex]}'), url('${overlays[currentOverlayIndex]}')`;
-
-            // Prelazak na sledeću pozadinu i overlay (ako dostignemo kraj liste, vraćamo se na početak)
             currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
             currentOverlayIndex = (currentOverlayIndex + 1) % overlays.length;
         }
 
-        // Pokreni promenu na svakih 10 minuta (600000 milisekundi)
         setInterval(changeBackgroundAndOverlay, 600000);
-
-        // Pokreni odmah promenu po učitavanju stranice
         changeBackgroundAndOverlay();
     </script>
 </body>
