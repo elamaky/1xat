@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Background</title>
+    <title>Random Background with Floating Hearts</title>
     <style>
         body {
             margin: 0;
@@ -12,6 +12,40 @@
             background-position: top left;
             background-size: auto;
             height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .mirjana {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.9;
+            font-weight: bold;
+            animation: moveText 10s linear infinite;
+        }
+
+        @keyframes moveText {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(0); }
         }
     </style>
 </head>
@@ -40,13 +74,62 @@
             'https://i.imgur.com/XzZBSj8l.jpg'
         ];
 
+        const heartColors = ["red", "pink", "blue", "purple", "orange"];
+
         function shuffleBackground() {
             const randomIndex = Math.floor(Math.random() * backgrounds.length);
             document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
         }
 
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            document.body.appendChild(heart);
+
+            const size = Math.random() * 30 + 10;
+            heart.style.fontSize = `${size}px`;
+            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        function createMirjanaText(position) {
+            const text = document.createElement("div");
+            text.innerHTML = "MIRJANA";
+            text.classList.add("mirjana");
+            text.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+
+            if (position === "left") {
+                text.style.left = "20px";
+                text.style.bottom = "20px";
+            } else {
+                text.style.right = "20px";
+                text.style.bottom = "20px";
+            }
+
+            document.body.appendChild(text);
+
+            setTimeout(() => {
+                text.remove();
+            }, 10000);
+        }
+
+        function displayMirjana() {
+            createMirjanaText("left");
+            createMirjanaText("right");
+        }
+
         shuffleBackground();
         setInterval(shuffleBackground, 300000); // Menja na svakih 5 minuta
+        setInterval(createHeart, 1000); // Dodaje srce svake sekunde
+        setInterval(displayMirjana, 600000); // Ispisuje "MIRJANA" na svakih 10 min
+
     </script>
 
 </body>
