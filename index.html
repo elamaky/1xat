@@ -8,44 +8,18 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/53sDWqq.gif'); /* Tvoja postojeća pozadina */
+            background-image: url('https://i.imgur.com/53sDWqq.gif'); /* Početna pozadina */
             background-repeat: repeat;
             background-position: top left;
             background-size: auto;
             height: 100vh;
         }
-
-        /* Kontejner za chat sa ispravljenim ID-em */
-        #messagesContainer {
-            width: 80%;
-            height: 80%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Overlay slike unutar kontejnera */
-        .overlay {
-            background-size: 350px 350px;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
-    <div id="messagesContainer">
-        <div class="overlay"></div> <!-- Overlay slike unutar message kontejnera -->
-    </div>
 
     <script>
-        // Listu pozadina (koje ostaju na stranici)
+        // Lista svih slika za pozadinu
         const backgrounds = [
             'https://i.imgur.com/53sDWqq.gif',
             'https://i.imgur.com/e4Hy5Yr.gif',
@@ -53,11 +27,7 @@
             'https://i.imgur.com/OZ3r1x2.gif',
             'https://i.imgur.com/ZBg2Oib.gif',
             'https://i.imgur.com/bwatzEB.gif',
-            'https://i.imgur.com/aNewBg2.jpg'
-        ];
-
-        // Listu overlay slika (koje će biti pozadinske slike unutar message kontejnera)
-        const overlays = [
+            'https://i.imgur.com/aNewBg2.jpg',
             'https://i.imgur.com/Uxtb4JYl.png',
             'https://i.imgur.com/wQc59dDl.png',
             'https://i.imgur.com/uQoHbdb.gif',
@@ -69,32 +39,25 @@
             'https://i.imgur.com/hHgApHh.gif',
             'https://i.imgur.com/4m63DJGl.png',
             'https://i.imgur.com/S7fjd3fl.png',
-            'https://i.imgur.com/e4Hy5Yr.gif',
-            'https://i.imgur.com/ZBg2Oib.gif',
             'https://i.imgur.com/XzZBSj8l.jpg'
         ];
 
         let currentBackgroundIndex = 0;
-        let currentOverlayIndex = 0;
 
-        // Funkcija za promenu pozadine stranice i overlay slike
-        function changeBackgroundAndOverlay() {
+        // Funkcija za promenu pozadine stranice
+        function changeBackground() {
             // Promena pozadine stranice
             document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
 
-            // Promena overlay slike u message kontejneru
-            document.querySelector('.overlay').style.backgroundImage = `url('${overlays[currentOverlayIndex]}')`;
-
-            // Prelazak na sledeću pozadinu i overlay
+            // Prelazak na sledeću pozadinu
             currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
-            currentOverlayIndex = (currentOverlayIndex + 1) % overlays.length;
         }
 
         // Pokreni promenu na svakih 10 minuta (600000 milisekundi)
-        setInterval(changeBackgroundAndOverlay, 600000);
+        setInterval(changeBackground, 600000);
 
         // Pokreni odmah promenu po učitavanju stranice
-        changeBackgroundAndOverlay();
+        changeBackground();
     </script>
 </body>
 </html>
