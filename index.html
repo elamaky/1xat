@@ -3,37 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Image</title>
+    <title>Dynamic Background</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://i.imgur.com/53sDWqq.gif'); /* Tvoja postojeća pozadina */
-            background-repeat: repeat; /* Pozadina se ponavlja */
-            background-position: top left; /* Pozicija pozadine */
-            background-size: auto; /* Originalna veličina tvoje pozadine */
-            height: 100vh; /* Pokriva celu visinu ekrana */
+            background-repeat: repeat;
+            background-size: auto;
+            height: 100vh;
         }
 
-        /* Druga slika koja se ponavlja preko pozadine */
-    .overlay {
-    background-image: url('');
-    background-repeat: repeat;
-    background-size: 200px 80px; /* Dimenzije slike */
-    background-position: 0 0; /* Početna pozicija */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Sprečava interakciju sa slikom */
-    background-position: 0 0, 350px 250px; /* Razmak između slika 350px horizontalno, 250px vertikalno */
-}
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-repeat: repeat;
+            background-size: auto;
+        }
 
-        
+        .mirror {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+        .left { left: 0; }
+        .right { right: 0; transform: scaleX(-1); }
     </style>
 </head>
 <body>
-    <div class="overlay"></div> <!-- Druga slika se prikazuje preko prve -->
+    <div class="overlay"></div>
+    <div class="mirror left"></div>
+    <div class="mirror right"></div>
+
+    <script>
+        const backgrounds = [
+            'https://i.imgur.com/53sDWqq.gif',
+            'https://i.imgur.com/e4Hy5Yr.gif',
+            'https://i.imgur.com/1DBAzgl.jpg',
+            'https://i.imgur.com/OZ3r1x2.gif',
+            'https://i.imgur.com/ZBg2Oib.gif',
+            'https://i.imgur.com/aNewBg2.jpg'
+        ];
+        
+        const overlays = [
+            'https://i.imgur.com/Uxtb4JYl.png',
+            'https://i.imgur.com/wQc59dDl.png',
+            'https://i.imgur.com/uQoHbdb.gif',
+            'https://i.imgur.com/yMwbuVDl.png',
+            'https://i.imgur.com/QoXRB2al.png',
+            'https://i.imgur.com/Q4rDeDV.gif',
+            'https://i.imgur.com/ZwS2id5.gif',
+            'https://i.imgur.com/izCZ2fy.gif',
+            'https://i.imgur.com/hHgApHh.gif',
+            'https://i.imgur.com/4m63DJGl.png',
+            'https://i.imgur.com/S7fjd3fl.png',
+            'https://i.imgur.com/e4Hy5Yr.gif',
+            'https://i.imgur.com/ZBg2Oib.gif',
+            'https://i.imgur.com/XzZBSj8l.jpg'
+        ];
+
+        function changeImages() {
+            const bgIndex = Math.floor(Math.random() * backgrounds.length);
+            const overlayIndex = Math.floor(Math.random() * overlays.length);
+            
+            document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+            document.querySelector('.overlay').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
+            document.querySelector('.left').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
+            document.querySelector('.right').style.backgroundImage = `url('${overlays[overlayIndex]}')`;
+        }
+        
+        changeImages();
+        setInterval(changeImages, 1800000); // Menja slike svakih 30 minuta
+    </script>
 </body>
 </html>
