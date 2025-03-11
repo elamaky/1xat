@@ -12,30 +12,83 @@
             background-position: top left;
             background-size: auto;
             height: 100vh;
+            transition: background-image 2s ease, background-color 1s ease; /* Dodana tranzicija za pozadinu */
+        }
+
+        #animation {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            color: #fff;
+            background-color: black;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateZ(0);
+            animation: neon 1s infinite alternate, slide 60s linear infinite;
+        }
+
+        @keyframes neon {
+            0% {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00f, 0 0 30px #00f, 0 0 40px #00f, 0 0 50px #00f;
+            }
+            100% {
+                text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 15px #ff0, 0 0 20px #f00, 0 0 30px #f00, 0 0 40px #f00, 0 0 50px #f00;
+            }
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0px) translateY(0px) rotate(0deg);
+            }
+            12.5% {
+                transform: translateX(100px) translateY(100px) rotate(45deg);
+            }
+            25% {
+                transform: translateX(200px) translateY(50px) rotate(90deg);
+            }
+            37.5% {
+                transform: translateX(300px) translateY(150px) rotate(135deg);
+            }
+            50% {
+                transform: translateX(400px) translateY(200px) rotate(180deg);
+            }
+            62.5% {
+                transform: translateX(500px) translateY(100px) rotate(225deg);
+            }
+            75% {
+                transform: translateX(600px) translateY(50px) rotate(270deg);
+            }
+            87.5% {
+                transform: translateX(700px) translateY(150px) rotate(315deg);
+            }
+            100% {
+                transform: translateX(800px) translateY(200px) rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
 
+    <div id="animation">By *__X__*</div>
+
     <script>
         const backgrounds = [
             'https://i.imgur.com/53sDWqq.gif',
             'https://i.imgur.com/e4Hy5Yr.gif',
-            'https://freeimage.host/i/3qoL8kF',
             'https://i.imgur.com/OZ3r1x2.gif',
             'https://i.imgur.com/ZBg2Oib.gif',
-            'https://freeimage.host/i/3qot3be',
-            'https://freeimage.host/i/3qoDBTX',
-            'https://freeimage.host/i/3qob2ou',
             'https://i.imgur.com/wdWnHPTl.jpg',
-           'https://freeimage.host/i/3qopSFj',
             'https://i.imgur.com/uQoHbdb.gif',
             'https://i.imgur.com/Q4rDeDV.gif',
             'https://i.imgur.com/ZwS2id5.gif',
             'https://i.imgur.com/izCZ2fy.gif',
             'https://i.imgur.com/hHgApHh.gif',
             'https://i.imgur.com/4m63DJGl.png'
-           
         ];
 
         function shuffleBackground() {
@@ -43,8 +96,20 @@
             document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
         }
 
+        function showAnimation() {
+            const animationElement = document.getElementById('animation');
+            animationElement.style.visibility = 'visible';
+            animationElement.style.opacity = 1;
+
+            setTimeout(() => {
+                animationElement.style.visibility = 'hidden';
+                animationElement.style.opacity = 0;
+            }, 60000); // Nestaje nakon 1 minuta
+        }
+
         shuffleBackground();
-        setInterval(shuffleBackground, 300000); // Menja na svakih 5 minuta
+        setInterval(shuffleBackground, 300000); // Menja pozadinu svakih 5 minuta
+        setInterval(showAnimation, 300000); // Pokreće animaciju svakih 5 minuta
     </script>
 
 </body>
