@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Background</title>
+    <title>Random Background & 3D Animation</title>
     <style>
         body {
             margin: 0;
@@ -12,69 +12,51 @@
             background-position: top left;
             background-size: auto;
             height: 100vh;
-            transition: background-image 2s ease, background-color 1s ease; /* Dodana tranzicija za pozadinu */
+            transition: background-image 2s ease-in-out, background-color 1s ease-in-out, opacity 2s ease-in-out, transform 2s ease-in-out;
         }
 
         #animation {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
+            bottom: 150px;
+            right: 150px;
             font-family: 'Courier New', Courier, monospace;
             font-size: 2rem;
-            color: #fff;
-            background-color: black;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            visibility: hidden;
-            opacity: 0;
+            color: #ffffff; /* Bela neon boja */
+            text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff;
+            visibility: visible;
+            opacity: 1;
             transform: translateZ(0);
-            animation: neon 1s infinite alternate, slide 60s linear infinite;
+            animation: moveUpDown 60s linear infinite, rotateXYZ 60s linear infinite; /* Animacije koje traju 1 minut (60s) */
         }
 
-        @keyframes neon {
+        @keyframes moveUpDown {
             0% {
-                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00f, 0 0 30px #00f, 0 0 40px #00f, 0 0 50px #00f;
-            }
-            100% {
-                text-shadow: 0 0 5px #ff0, 0 0 10px #ff0, 0 0 15px #ff0, 0 0 20px #f00, 0 0 30px #f00, 0 0 40px #f00, 0 0 50px #f00;
-            }
-        }
-
-        @keyframes slide {
-            0% {
-                transform: translateX(0px) translateY(0px) rotate(0deg);
-            }
-            12.5% {
-                transform: translateX(100px) translateY(100px) rotate(45deg);
-            }
-            25% {
-                transform: translateX(200px) translateY(50px) rotate(90deg);
-            }
-            37.5% {
-                transform: translateX(300px) translateY(150px) rotate(135deg);
+                bottom: 150px;
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); /* Početak animacije */
             }
             50% {
-                transform: translateX(400px) translateY(200px) rotate(180deg);
-            }
-            62.5% {
-                transform: translateX(500px) translateY(100px) rotate(225deg);
-            }
-            75% {
-                transform: translateX(600px) translateY(50px) rotate(270deg);
-            }
-            87.5% {
-                transform: translateX(700px) translateY(150px) rotate(315deg);
+                bottom: 100px;
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg); /* Rotacija i pomeranje prema vrhu */
             }
             100% {
-                transform: translateX(800px) translateY(200px) rotate(360deg);
+                bottom: 150px;
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); /* Pomeranje nazad do početne pozicije */
             }
         }
+
+        @keyframes rotateXYZ {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            25% { transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg); }
+            50% { transform: rotateX(180deg) rotateY(90deg) rotateZ(0deg); }
+            75% { transform: rotateX(270deg) rotateY(180deg) rotateZ(90deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); }
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="animation">By *__X__*</div>
+    <div id="animation">*__X__*</div>
 
     <script>
         const backgrounds = [
@@ -90,26 +72,38 @@
             'https://i.imgur.com/hHgApHh.gif',
             'https://i.imgur.com/4m63DJGl.png'
         ];
-
-        function shuffleBackground() {
-            const randomIndex = Math.floor(Math.random() * backgrounds.length);
-            document.body.style.backgroundImage = `url('${backgrounds[randomIndex]}')`;
+        
+        let backgroundIndex = 0;
+        const transitions = [
+            'ease-in-out', 'linear', 'ease', 'cubic-bezier(0.25, 1, 0.5, 1)', 'ease-in', 'ease-out',
+            'ease-in-out-cubic', 'ease-in-out-quint', 'step-start', 'step-end', 'initial', 'inherit'
+        ];
+        
+        function changeBackground() {
+            const transitionType = transitions[Math.floor(Math.random() * transitions.length)];
+            document.body.style.transition = `background-image 2s ${transitionType}, opacity 2s ${transitionType}, transform 2s ${transitionType}`;
+            document.body.style.backgroundImage = `url('${backgrounds[backgroundIndex]}')`;
+            backgroundIndex = (backgroundIndex + 1) % backgrounds.length;
         }
 
-        function showAnimation() {
+        function startAnimation() {
             const animationElement = document.getElementById('animation');
             animationElement.style.visibility = 'visible';
             animationElement.style.opacity = 1;
+            animationElement.style.animation = 'moveUpDown 60s linear infinite, rotateXYZ 60s linear infinite'; // Animacija traje 1 minut
 
             setTimeout(() => {
                 animationElement.style.visibility = 'hidden';
                 animationElement.style.opacity = 0;
-            }, 60000); // Nestaje nakon 1 minuta
+            }, 60000); // Animacija traje 1 minut
         }
 
-        shuffleBackground();
-        setInterval(shuffleBackground, 300000); // Menja pozadinu svakih 5 minuta
-        setInterval(showAnimation, 300000); // Pokreće animaciju svakih 5 minuta
+        // Pozadina menja svakih 5 minuta (300000 ms)
+        changeBackground();
+        setInterval(changeBackground, 300000); // Menjanje pozadine svakih 5 minuta
+
+        // Animacija slova počinje svakih 3 minuta (180000 ms)
+        setInterval(startAnimation, 180000); // Pokretanje animacije svakih 3 minuta
     </script>
 
 </body>
