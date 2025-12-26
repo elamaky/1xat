@@ -1,275 +1,131 @@
 <!DOCTYPE html>
-<html lang="sr-Latn-RS">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Radio-Chat flatcast+xat, 24/7, Romani muzika, DJ-*__X__*, Srbija, Makedonija, Prokuplje, Nis, Kragujevac, Beograd, Leskovac, Skoplje, Ohrid, Sarajevo">
-    
-    <title>Radio Prokuplje Galaksija</title> <!-- tedikavtumenpkkl0402 -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dj.css">
-    <link rel="stylesheet" href="gradi.css">
-    <script src="/socket.io/socket.io.js"></script>
+    <title>Random Background & 3D Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-repeat: repeat;
+            background-position: top left;
+            background-size: auto;
+            height: 100vh;
+            transition: background-image 2s ease-in-out, background-color 1s ease-in-out, opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
 
-    <!-- Geo/meta podaci za lokacije -->
-    <meta name="geo.region" content="RS">
-    <meta name="geo.placename" content="Prokuplje">
-    <meta name="geo.position" content="43.2256;21.7781">
-    <meta name="ICBM" content="43.2256,21.7781">
+        #animation {
+            position: fixed;
+            bottom: 150px;
+            right: 150px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            color: #ffffff; /* Bela neon boja */
+            text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff;
+            visibility: visible;
+            opacity: 1;
+            transform: translateZ(0);
+            animation: moveUpDown 60s linear infinite, rotateXYZ 60s linear infinite; /* Animacije koje traju 1 minut (60s) */
+        }
 
-    <meta name="geo.placename" content="Niš">
-    <meta name="geo.position" content="43.3217;21.8958">
-    <meta name="ICBM" content="43.3217,21.8958">
+        @keyframes moveUpDown {
+            0% {
+                bottom: 150px;
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); /* Početak animacije */
+            }
+            50% {
+                bottom: 100px;
+                transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg); /* Rotacija i pomeranje prema vrhu */
+            }
+            100% {
+                bottom: 150px;
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); /* Pomeranje nazad do početne pozicije */
+            }
+        }
 
-    <meta name="geo.placename" content="Beograd">
-    <meta name="geo.position" content="44.8176;20.4569">
-    <meta name="ICBM" content="44.8176,20.4569">
+        @keyframes rotateXYZ {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            25% { transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg); }
+            50% { transform: rotateX(180deg) rotateY(90deg) rotateZ(0deg); }
+            75% { transform: rotateX(270deg) rotateY(180deg) rotateZ(90deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); }
+        }
 
-    <meta name="geo.placename" content="Nemačka">
-    <meta name="geo.position" content="51.1657;10.4515">
-    <meta name="ICBM" content="51.1657,10.4515">
-
-    <meta name="geo.placename" content="Bosna">
-    <meta name="geo.position" content="43.9159;17.6791">
-    <meta name="ICBM" content="43.9159,17.6791">
-
-    <meta name="geo.placename" content="Makedonija">
-    <meta name="geo.position" content="41.6086;21.7453">
-    <meta name="ICBM" content="41.6086,21.7453">
-
-    <!-- Inicijalizacija Socket.io -->
-    <script>
-        window.socket = io();
-    </script>
+    </style>
 </head>
 <body>
-       <div id="authContainer" style="display: none;">
-    <!-- Forma za registraciju -->
-    <form id="registerForm">
-         <button type="submit">Registracija</button>
-        <input type="text" id="registerUsername" placeholder="Napavi Nik" required>
-        <input type="password" id="registerPassword" placeholder="Lozinka" required>
-        </form>
-    
-    <!-- Forma za prijavu -->
-    <form id="loginForm">
-         <button type="submit">Prijava</button>
-        <input type="text" id="loginUsername" placeholder="Login" required>
-        <input type="password" id="loginPassword" placeholder="Lozinka" required>
-       </form>
-</div>
 
-<div id="chatContainer">
-  <div id="toolbar" style="display: flex;">
-    <button id="openModal" class="toolbarBtn">D</button>
-    <button class="toolbarBtn" id="NIK">Login</button>
-    <button class="toolbarBtn" id="sound">Play</button>
-    <button class="toolbarBtn" id="smilesBtn">Smiles</button>
-    <button class="toolbarBtn" id="GBtn">G</button>
-    <button class="toolbarBtn" id="boldBtn">Bold</button>
-    <button class="toolbarBtn" id="italicBtn">Italic</button>
-    <button class="toolbarBtn" id="colorBtn">Color</button>
-    <input type="color" id="colorPicker" style="display: none;">
-    <input type="color" id="adminColorPicker" style="display: none;">
-  </div>
+    <div id="animation">*__X__*</div>
 
-<!-- Modal -->
-<div id="gostimodal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-
-    <!-- Dugmici unutar modala -->
-<button class="toolbarBtn" id="kodgosti">Kodovi </button>
-<button class="toolbarBtn" id="font">Font</button>
-<button class="toolbarBtn" id="farbe">Farbe</button>
-<button class="toolbarBtn" id="linijagoreBtn">Krov</button>
-<button class="toolbarBtn" id="linijadoleBtn">Temelj</button>
- <button class="toolbarBtn" id="plusBtn" onclick="increaseFontSize()">+</button>
-<button class="toolbarBtn" id="minusBtn" onclick="decreaseFontSize()">-</button>
-<button class="toolbarBtn" id="sl">Slike</button>
-<button class="toolbarBtn" id="nik">Samo Dj</button>
-<button class="toolbarBtn" id="sn">SnimanjePoruka</button>
-<button class="toolbarBtn" id="mia">R-Mia</button>
-<button class="toolbarBtn" id="pink">Pinkradio</button>
-<button class="toolbarBtn" id="rs">RadioSr</button>
-<button class="toolbarBtn" id="bg">RomaBg</button>
-<button class="toolbarBtn" id="at">H&A</button>
-
-  </div>
-</div>
-    
-<div id="functionModal" class="modal" style="display: none;" draggable="true">
-  <span class="close" id="closeModal">&times;</span>
-  <h2>🧡💜🤎Radio Galaksija💚❤💛</h2>
-
-  <button id="up">Uputstvo za DJ-a</button>
-  <button id="vir">Roboti</button>
-  <button id="clearChat">Obriši chat</button>
-  <button id="privateMessage">Privat</button>
-  <button id="pozadina">Pozadina</button>
-  <button id="addImage">WebSlike</button>
-  <button id="anitext">Text</button>
-  <button id="spisak">Spisak</button>
-  <button id="chat">Chat</button>
-  <button id="gradi">Okvir(Boje)</button>
-  <button id="baro">Sirina</button>
-  <button id="pesme">Mixer</button>
-  <button id="mem">WebMaska</button>
-  <button id="govna">*__X__*</button>
-  <button id="pi">BrisanjeWeba</button>
-  <button id="applyDefaultColor">GostiBoje</button>
-  <button id="admingradijent">GostiFarbe</button>
-   <button id="ram">Ram</button>
-</div>
-
-
-<div id="uuidModal" style="display: none;">
-    <h3>BY *__X__*</h3>
-    <ul id="uuidList"></ul>
-<button id="blokip"> Blokip </button>
-<button id="delete"> Delete </button>
-</div>
-    
-<table id="tabela" style="display:none;"></table>
-<div id="avatar" style="display: none;"></div>
-
-<div id="gradijent" style="display: none;">
-   <div class="gradijent-box gradient-1">1</div>
-  <div class="gradijent-box gradient-2">2</div>
-  <div class="gradijent-box gradient-3">3</div>
-  <div class="gradijent-box gradient-4">4</div>
-  <div class="gradijent-box gradient-5">5</div>
-  <div class="gradijent-box gradient-6">6</div>
-  <div class="gradijent-box gradient-7">7</div>
-  <div class="gradijent-box gradient-8">8</div>
-  <div class="gradijent-box gradient-9">9</div>
-  <div class="gradijent-box gradient-10">10</div>
-  <div class="gradijent-box gradient-11">11</div>
-  <div class="gradijent-box gradient-12">12</div>
-  <div class="gradijent-box gradient-13">13</div>
-  <div class="gradijent-box gradient-14">14</div>
-  <div class="gradijent-box gradient-15">15</div>
-  <div class="gradijent-box gradient-16">16</div>
-  <div class="gradijent-box gradient-17">17</div>
-  <div class="gradijent-box gradient-18">18</div>
-  <div class="gradijent-box gradient-19">19</div>
-  <div class="gradijent-box gradient-20">20</div>
-  <div class="gradijent-box gradient-21">21</div>
-  <div class="gradijent-box gradient-22">22</div>
-  <div class="gradijent-box gradient-23">23</div>
-  <div class="gradijent-box gradient-24">24</div>
-  <div class="gradijent-box gradient-25">25</div>
-  <div class="gradijent-box gradient-26">26</div>
-  <div class="gradijent-box gradient-27">27</div>
-  <div class="gradijent-box gradient-28">28</div>
-  <div class="gradijent-box gradient-29">29</div>
-  <div class="gradijent-box gradient-30">30</div>
-  <div class="gradijent-box gradient-31">31</div>
-  <div class="gradijent-box gradient-32">32</div>
-  <div class="gradijent-box gradient-33">33</div>
-  <div class="gradijent-box gradient-34">34</div>
-  <div class="gradijent-box gradient-35">35</div>
-  <div class="gradijent-box gradient-36">36</div>
-  <div class="gradijent-box gradient-37">37</div>
-  <div class="gradijent-box gradient-38">38</div>
-  <div class="gradijent-box gradient-39">39</div>
-  <div class="gradijent-box gradient-40">40</div>
-  <div class="gradijent-box gradient-41">41</div>
-  <div class="gradijent-box gradient-42">42</div>
-  <div class="gradijent-box gradient-43">43</div>
-  <div class="gradijent-box gradient-44">44</div>
-  <div class="gradijent-box gradient-45">45</div>
-  <div class="gradijent-box gradient-46">46</div>
-  <div class="gradijent-box gradient-47">47</div>
-  <div class="gradijent-box gradient-48">48</div>
-  <div class="gradijent-box gradient-49">49</div>
-  <div class="gradijent-box gradient-50">50</div>
-</div>
-<!-- ZA ADMIN GRADIJENTE -->
-    <div id="xgradixadmin" style="display: none;">
-  <div class="xgradijentx-xbox grad-admin-1">1</div>
-  <div class="xgradijentx-xbox grad-admin-2">2</div>
-  <div class="xgradijentx-xbox grad-admin-3">3</div>
-  <div class="xgradijentx-xbox grad-admin-4">4</div>
-  <div class="xgradijentx-xbox grad-admin-5">5</div>
-  <div class="xgradijentx-xbox grad-admin-6">6</div>
-  <div class="xgradijentx-xbox grad-admin-7">7</div>
-  <div class="xgradijentx-xbox grad-admin-8">8</div>
-  <div class="xgradijentx-xbox grad-admin-9">9</div>
-  <div class="xgradijentx-xbox grad-admin-10">10</div>
-</div>
-
-
- <div id="messageArea"></div>
-
-<textarea id="chatInput" rows="1" placeholder="Ispeci Pa Reci...Godjaja Lafi....." maxlength="200"></textarea>
-
-    <div id="guestList"></div>
-      <div id="mixer">
-        <audio id="audioPlayer" controls style="position: absolute; top: 0px; left: 0;"></audio>
-        <h2 class="title" style="position: absolute; top: 60px; left: 0;">By *__X__*</h2>
-        <input type="file" id="fileInput" multiple style="position: absolute; top: 90px; left: 0; right: 0; margin-bottom: 10px;">
-
-        <ul id="songList"></ul>
+    <script>
+        const backgrounds = [
+            'https://i.imgur.com/RJ7XcGZ.gif',
+            'https://i.imgur.com/53sDWqq.gif',
+            'https://i.imgur.com/e4Hy5Yr.gif',
+            'https://i.imgur.com/OZ3r1x2.gif',
+            'https://i.imgur.com/ZBg2Oib.gif',
+            'https://i.imgur.com/wdWnHPTl.jpg',
+            'https://i.imgur.com/uQoHbdb.gif',
+            'https://i.imgur.com/Q4rDeDV.gif',
+            'https://i.imgur.com/ZwS2id5.gif',
+            'https://i.imgur.com/izCZ2fy.gif',
+            'https://i.imgur.com/hHgApHh.gif',
+            'https://i.imgur.com/4m63DJGl.png'
+        ];
         
-        <div id="mixer-buttons">
-            <button id="playSelected">Play</button>
-            <button id="deleteSelected">Obriši</button>
-            
-             </div>
-    </div>
+        let backgroundIndex = 0;
+        const transitions = [
+            'ease-in-out', 'linear', 'ease', 'cubic-bezier(0.25, 1, 0.5, 1)', 'ease-in', 'ease-out',
+            'ease-in-out-cubic', 'ease-in-out-quint', 'step-start', 'step-end', 'initial', 'inherit'
+        ];
+        
+        function changeBackground() {
+            const transitionType = transitions[Math.floor(Math.random() * transitions.length)];
+            document.body.style.transition = `background-image 2s ${transitionType}, opacity 2s ${transitionType}, transform 2s ${transitionType}`;
+            document.body.style.backgroundImage = `url('${backgrounds[backgroundIndex]}')`;
+            backgroundIndex = (backgroundIndex + 1) % backgrounds.length;
+        }
 
-     <audio id="radioStream" preload="auto">
-  <source src="https://stream.zeno.fm/krdfduyswxhtv" type="audio/mp3">
-  Vaš pregledač ne podržava audio element.
-</audio>
+        function startAnimation() {
+            const animationElement = document.getElementById('animation');
+            animationElement.style.visibility = 'visible';
+            animationElement.style.opacity = 1;
+            animationElement.style.animation = 'moveUpDown 60s linear infinite, rotateXYZ 60s linear infinite'; // Animacija traje 1 minut
 
-  
-<script src="regist.js"></script>
-<script src="elementi.js"></script>
-<script src="konobarica.js"></script>
-<script src="formatiranje.js"></script>
-<script src="smile.js"></script>
-<script src="poruke.js"></script>
-<script src="privat.js"></script>
-<script src="spisak.js"></script>
-<script src="ava.js"></script>
-<script src="font.js"></script>
-<script src="stats.js"></script>
-<script src="mixer.js"></script>
-<script src="nikani.js"></script>
-<script src="gradi.js"></script>
-<script src="mem.js"></script>
-<script src="sirina.js"></script>
-<script src="slike.js"></script>
-<script src="snimak.js"></script>
-<script src="uputstvo.js"></script>
-<script src="is.js"></script>
- <script src="restart.js"></script>
- <script src="funkcije.js"></script>
- <script src="ib.js"></script>
- <script src="gliter.js"></script>
- <script src="chatani.js"></script>
+            setTimeout(() => {
+                animationElement.style.visibility = 'hidden';
+                animationElement.style.opacity = 0;
+            }, 60000); // Animacija traje 1 minut
+        }
 
+        // Pozadina menja svakih 5 minuta (300000 ms)
+        changeBackground();
+        setInterval(changeBackground, 300000); // Menjanje pozadine svakih 5 minuta
 
-            <!-- Default Statcounter code for Galaksija
-https://radiogalaksija.onrender.com/ -->
+        // Animacija slova počinje svakih 3 minuta (180000 ms)
+        setInterval(startAnimation, 180000); // Pokretanje animacije svakih 3 minuta
+    </script>
+
+<!-- Default Statcounter code for xat [GitHub
+Page](https://elamaky.github.io/1xat/) |
+[Xat](https://xat.com/RadioProkuplje) -->
 <script type="text/javascript">
-var sc_project=13110379; 
+var sc_project=13110546; 
 var sc_invisible=1; 
-var sc_security="58b9edbb"; 
+var sc_security="b9055e2d"; 
 </script>
 <script type="text/javascript"
 src="https://www.statcounter.com/counter/counter.js"
 async></script>
-<noscript><div class="statcounter"><a title="Web Analytics"
-href="https://statcounter.com/" target="_blank"><img
-class="statcounter"
-src="https://c.statcounter.com/13110379/0/58b9edbb/1/"
-alt="Web Analytics"
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - Statcounter" href="https://statcounter.com/"
+target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/13110546/0/b9055e2d/1/"
+alt="Web Analytics Made Easy - Statcounter"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
-   </body>
+
+</body>
 </html>
